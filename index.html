@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joki Tugas by ADN | Order Cepat via WhatsApp</title>
+<meta name="description" content="Pilih jenis tugas, klik order, langsung chat WhatsApp. Mulai 3rb.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#eef3fb;--grid:#cfdcf0;--ink:#14233f;--hi:#ffe14d;--card:#fff;--wa:#1faa59;--muted:#5a6b88;--pink:#ff6b9d}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;color:var(--ink);overflow-x:hidden;
+  font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;animation:gridmove 12s linear infinite;
+  display:flex;justify-content:center;padding:22px 16px 48px;
+}
+main{position:relative;z-index:1;width:100%;max-width:480px}
+
+/* bar WA atas */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px;padding:10px 12px;background:var(--card);border:2px solid var(--ink);border-radius:12px;font-size:.92rem;font-weight:600}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--wa);margin-right:6px;animation:dot 1s infinite}
+.wa{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:2px solid var(--ink);border-radius:10px;background:var(--wa);color:#fff;text-decoration:none;font-weight:800;white-space:nowrap;animation:pulse 1.8s infinite}
+.wa:hover{filter:brightness(1.07)}
+.wa:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* marquee */
+.marq{overflow:hidden;margin:0 0 20px;border:2px solid var(--ink);border-radius:10px;background:var(--ink);color:var(--hi);font-weight:800}
+.marq div{display:flex;width:max-content;animation:marq 16s linear infinite}
+.marq span{padding:8px 18px;white-space:nowrap}
+
+/* judul */
+.hero{position:relative;margin:0 0 8px}
+h1{font-size:2.1rem;line-height:1.1;margin:0 0 8px;font-weight:800;padding-right:84px}
+h1 mark{background:var(--hi);padding:0 .25em;border-radius:4px;animation:blink 1.4s infinite}
+.badge{position:absolute;right:0;top:-6px;width:78px;height:78px;border-radius:50%;background:var(--pink);color:#fff;border:2px solid var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-weight:800;line-height:1.05;font-size:.78rem;box-shadow:3px 3px 0 var(--ink);animation:wobble 2.2s ease-in-out infinite}
+.badge b{font-size:1.35rem}
+.sub{margin:0 0 6px;color:var(--muted);font-size:1rem}
+.type{margin:0 0 20px;font-weight:800;font-size:1.05rem;min-height:1.5em}
+.type em{font-style:normal;background:var(--hi);padding:0 .3em;border-radius:4px}
+.cur{display:inline-block;width:2px;height:1em;background:var(--ink);vertical-align:-2px;margin-left:2px;animation:dot .8s steps(1) infinite}
+
+/* form */
+.panel{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:18px;box-shadow:6px 6px 0 var(--ink);animation:rise .6s both}
+h2{font-size:1.05rem;margin:0 0 12px}
+.opts{display:grid;gap:10px;margin:0 0 18px;padding:0;border:0}
+.opt{animation:slidein .5s both}
+.opt input{position:absolute;opacity:0}
+.opt span{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--grid);border-radius:12px;cursor:pointer;font-weight:600;transition:transform .15s,border-color .15s,background .15s}
+.opt span::after{content:"";width:20px;height:20px;border-radius:50%;border:2px solid var(--grid);flex:none}
+.opt:hover span{transform:translateX(5px) rotate(-.6deg);border-color:var(--ink)}
+.opt input:checked + span{border-color:var(--ink);background:var(--hi);animation:pop .35s}
+.opt input:checked + span::after{content:"✓";background:var(--ink);border-color:var(--ink);color:var(--hi);display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.opt input:focus-visible + span{outline:3px solid var(--wa);outline-offset:2px}
+label.f{display:block;font-weight:600;font-size:.9rem;margin:0 0 6px}
+input[type=text],textarea{width:100%;font:inherit;padding:11px 12px;border:2px solid var(--grid);border-radius:12px;margin:0 0 14px;background:#fff;color:var(--ink);transition:border-color .15s}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+button{width:100%;font:inherit;font-weight:800;font-size:1.05rem;cursor:pointer;padding:14px;border:2px solid var(--ink);border-radius:12px;background:var(--wa);color:#fff;animation:pulse 1.8s infinite,shake 4s infinite 2s;transition:transform .1s}
+button:active{transform:scale(.97)}
+.err{color:#b3261e;font-size:.9rem;margin:-8px 0 12px;display:none}
+.err.on{display:block;animation:shake .4s}
+
+.trust{display:flex;flex-wrap:wrap;gap:8px 16px;margin:20px 2px 0;padding:0;list-style:none;font-size:.92rem;font-weight:600}
+.trust li{animation:slidein .5s both}
+.trust li::before{content:"✓ ";color:var(--wa)}
+footer{margin-top:24px;text-align:center;color:var(--muted);font-size:.82rem}
+
+/* dekorasi */
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx i{position:absolute;bottom:-40px;font-style:normal;animation:rise2 linear infinite}
+.deco{position:fixed;z-index:0;font-size:1.8rem;pointer-events:none;animation:float 4s ease-in-out infinite;--r:-8deg}
+.deco.b{animation-duration:5s;--r:10deg}
+.spark{position:fixed;z-index:0;font-size:1.2rem;pointer-events:none;animation:twinkle 1.6s ease-in-out infinite}
+
+@keyframes gridmove{to{background-position:28px 28px}}
+@keyframes marq{to{transform:translateX(-50%)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,170,89,.6)}70%{box-shadow:0 0 0 14px rgba(31,170,89,0)}100%{box-shadow:0 0 0 0 rgba(31,170,89,0)}}
+@keyframes blink{0%,100%{background:var(--hi)}50%{background:#fff6b8}}
+@keyframes dot{50%{opacity:.15}}
+@keyframes wobble{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.1)}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+@keyframes slidein{from{opacity:0;transform:translateX(-20px)}}
+@keyframes pop{50%{transform:scale(1.04)}}
+@keyframes shake{0%,88%,100%{transform:none}90%{transform:translateX(-5px)}93%{transform:translateX(5px)}96%{transform:translateX(-3px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-14px) rotate(var(--r))}}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes rise2{from{transform:translateY(0) rotate(0);opacity:0}10%{opacity:.9}to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.fx{display:none}}
+@media (max-width:380px){h1{font-size:1.8rem}}
+.tag{text-align:center;margin:0 0 12px;font-weight:800;font-size:1rem}
+.tag mark{background:var(--hi);padding:2px .5em;border-radius:6px;border:2px solid var(--ink);display:inline-block;animation:blink 1.4s infinite}
+.brand{text-align:center;margin:0 0 10px;font-weight:800;font-size:1.55rem;line-height:1.2}
+.brand mark{background:linear-gradient(transparent 8%,var(--hi) 8%);padding:0 .3em;border-radius:6px;display:inline-block;transform:rotate(-1.5deg);background-size:0% 100%;background-repeat:no-repeat;animation:sweep .8s .2s forwards}
+@keyframes sweep{to{background-size:100% 100%}}
+</style>
+</head>
+<body>
+<div class="fx" id="fx" aria-hidden="true"></div>
+<span class="deco" style="top:12%;left:3%" aria-hidden="true">✏️</span>
+<span class="deco b" style="top:32%;right:3%" aria-hidden="true">📚</span>
+<span class="deco" style="bottom:12%;left:5%" aria-hidden="true">📝</span>
+<span class="deco b" style="bottom:22%;right:5%" aria-hidden="true">🎓</span>
+<span class="spark" style="top:8%;right:18%" aria-hidden="true">✨</span>
+<span class="spark" style="top:55%;left:3%;animation-delay:.5s" aria-hidden="true">✨</span>
+<span class="spark" style="bottom:6%;right:25%;animation-delay:1s" aria-hidden="true">✨</span>
+
+<main>
+  <h2 class="brand" style="margin-bottom:10px"><mark>Joki Tugas by ADN</mark></h2>
+  <p class="tag"><mark>🔒 Privasi aman</mark></p>
+  <div class="top">
+    <span><i class="dot"></i>Atau langsung WA ke 0896-6444-2659</span>
+    <a class="wa" href="https://wa.me/6289664442659?text=Halo%20kak%2C%20saya%20mau%20tanya%20jasa%20tugas." target="_blank" rel="noopener">Chat WhatsApp</a>
+  </div>
+
+  <div class="marq" aria-hidden="true"><div>
+    <span>SD ★ SMP ★ SMA ★ KULIAH ★ SKRIPSI ★ TESIS ★ MAKALAH ★ PPT ★</span>
+    <span>SD ★ SMP ★ SMA ★ KULIAH ★ SKRIPSI ★ TESIS ★ MAKALAH ★ PPT ★</span>
+  </div></div>
+
+  <div class="hero">
+    <h1>Tugas numpuk? <mark>Order di sini.</mark></h1>
+    <div class="badge" aria-hidden="true">mulai<b>3rb</b>aja!</div>
+  </div>
+  <p class="sub">Semua layanan <strong>mulai 3rb</strong>. Pilih jenis tugas, isi detail singkat, lalu lanjut chat WhatsApp.</p>
+  <p class="type">Bantu kamu: <em id="tw"></em><span class="cur"></span></p>
+
+  <form class="panel" id="f" novalidate>
+    <fieldset class="opts" style="border:0;padding:0;margin:0 0 18px">
+      <legend><h2>Pilih layanan</h2></legend>
+      <label class="opt" style="animation-delay:.1s"><input type="radio" name="svc" value="Tugas SD"><span>Tugas SD</span></label>
+      <label class="opt" style="animation-delay:.18s"><input type="radio" name="svc" value="Tugas SMP"><span>Tugas SMP</span></label>
+      <label class="opt" style="animation-delay:.26s"><input type="radio" name="svc" value="Tugas SMA/SMK"><span>Tugas SMA/SMK</span></label>
+      <label class="opt" style="animation-delay:.34s"><input type="radio" name="svc" value="Tugas Kuliah"><span>Tugas Kuliah</span></label>
+      <label class="opt" style="animation-delay:.42s"><input type="radio" name="svc" value="Makalah / PPT"><span>Makalah / PPT</span></label>
+      <label class="opt" style="animation-delay:.5s"><input type="radio" name="svc" value="Skripsi / Tesis"><span>Skripsi / Tesis</span></label>
+      <label class="opt" style="animation-delay:.58s"><input type="radio" name="svc" value="Lainnya"><span>Lainnya</span></label>
+    </fieldset>
+
+    <p class="err" id="err" role="alert">Pilih salah satu layanan dulu ya.</p>
+
+    <label class="f" for="nama">Nama kamu</label>
+    <input type="text" id="nama" placeholder="Contoh: Rina" autocomplete="name">
+
+    <label class="f" for="detail">Detail tugas dan deadline</label>
+    <textarea id="detail" placeholder="Contoh: Makalah 10 halaman, deadline Jumat"></textarea>
+
+    <button type="submit">Lanjut ke WhatsApp</button>
+  </form>
+
+  <ul class="trust">
+    <li style="animation-delay:.7s">Respon cepat</li>
+    <li style="animation-delay:.8s">Hasil rapi</li>
+    <li style="animation-delay:.9s">Revisi sesuai kesepakatan</li>
+    <li style="animation-delay:1s">Privasi aman</li>
+  </ul>
+  <footer>Joki Tugas by ADN</footer>
+</main>
+
+<script>
+// ====== UBAH DI SINI ======
+var NOMOR_WA = "6289664442659"; // format: 62 + nomor tanpa 0 di depan
+// ==========================
+
+// kirim ke WhatsApp
+document.getElementById("f").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var pilih = document.querySelector('input[name="svc"]:checked');
+  var err = document.getElementById("err");
+  if (!pilih) { err.classList.remove("on"); void err.offsetWidth; err.classList.add("on"); return; }
+  err.classList.remove("on");
+  var nama = document.getElementById("nama").value.trim();
+  var detail = document.getElementById("detail").value.trim();
+  var pesan = "Halo kak, saya mau order.\nLayanan: " + pilih.value + "\nNama: " + (nama || "-") + "\nDetail/deadline: " + (detail || "-");
+  window.location.href = "https://wa.me/" + NOMOR_WA + "?text=" + encodeURIComponent(pesan);
+});
+
+// efek ketik
+(function () {
+  var kata = ["Tugas Sekolah", "Makalah", "PPT", "Skripsi", "Tesis", "Esai"];
+  var el = document.getElementById("tw"), i = 0, j = 0, hapus = false;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = kata.join(", "); return; }
+  function tik() {
+    var k = kata[i];
+    el.textContent = k.slice(0, j);
+    if (!hapus && j < k.length) { j++; setTimeout(tik, 90); }
+    else if (!hapus) { hapus = true; setTimeout(tik, 1200); }
+    else if (j > 0) { j--; setTimeout(tik, 45); }
+    else { hapus = false; i = (i + 1) % kata.length; setTimeout(tik, 250); }
+  }
+  tik();
+})();
+
+// emoji naik dari bawah
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var fx = document.getElementById("fx"), ic = ["📚", "✏️", "📝", "💡", "⭐", "🎓", "📖", "✅"];
+  for (var n = 0; n < 14; n++) {
+    var s = document.createElement("i");
+    s.textContent = ic[n % ic.length];
+    s.style.left = (Math.random() * 94) + "%";
+    s.style.fontSize = (16 + Math.random() * 18) + "px";
+    s.style.animationDuration = (9 + Math.random() * 9) + "s";
+    s.style.animationDelay = (-Math.random() * 14) + "s";
+    fx.appendChild(s);
+  }
+})();
+</script>
+</body>
+</html>
